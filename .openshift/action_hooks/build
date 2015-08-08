@@ -53,5 +53,6 @@ for ext in "${!PHP_PECL[@]}"; do
     check_pecl ${ext} ${PHP_PECL["$ext"]} ${PHP_PECL_CONFIGURE["$ext"]};
 done
 
-# Check NodeJS
-check_node
+# Extra
+#source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phalcon
