@@ -37,10 +37,11 @@ CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
 TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
 
 # Load functions
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_util
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_nginx
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php_libs
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php
-source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
+# source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 
 # Check nginx
 check_nginx
@@ -54,5 +55,4 @@ for ext in "${!PHP_PECL[@]}"; do
 done
 
 # Extra
-#source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phalcon
