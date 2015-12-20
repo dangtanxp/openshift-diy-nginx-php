@@ -15,9 +15,9 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/common
 # Configure versions
 NGINX_VERSION='1.9.3'
 ZLIB_VERSION='1.2.8'
-PCRE_VERSION='8.37'
+PCRE_VERSION='8.38'
 
-PHP_VERSION='5.6.12'
+PHP_VERSION='7.0.1'
 ICU_VERSION='55.1'
 
 LIBMCRYPT_VERSION='2.5.8'
@@ -25,8 +25,8 @@ LIBTOOL_VERSION='2.4.6'
 RE2C_VERSION='0.14.1'
 BISON_VERSION='2.7.1'
 
-NODE_VERSION='0.12.7'
-PHALCON_VERSION='2.0.6'
+NODE_VERSION='0.12.9'
+PHALCON_VERSION='2.0.9'
 
 declare -A PHP_PECL
 declare -A PHP_PECL_CONFIGURE
@@ -61,4 +61,5 @@ for ext in "${!PHP_PECL[@]}"; do
 done
 
 # Extra
+# source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phalcon
