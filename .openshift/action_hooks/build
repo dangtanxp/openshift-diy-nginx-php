@@ -13,11 +13,12 @@ umask 077
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/common
 
 # Configure versions
-NGINX_VERSION='1.9.9'
+NGINX_VERSION='1.9.13'
 ZLIB_VERSION='1.2.8'
 PCRE_VERSION='8.38'
+NPS_VERSION='1.9.32.13'
 
-PHP_VERSION='7.0.1'
+PHP_VERSION='7.0.5'
 ICU_VERSION='56.1'
 
 LIBMCRYPT_VERSION='2.5.8'
@@ -25,8 +26,8 @@ LIBTOOL_VERSION='2.4.6'
 RE2C_VERSION='0.15.3'
 BISON_VERSION='3.0.4'
 
-NODE_VERSION='0.12.9'
-PHALCON_VERSION='2.0.9'
+NODE_VERSION='5.10.0'
+PHALCON_VERSION='2.0.10'
 
 declare -A PHP_PECL
 declare -A PHP_PECL_CONFIGURE
@@ -62,4 +63,5 @@ done
 
 # Extra
 # source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
-source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phalcon
+## Phalcon shoud build by hand: ext/
+# source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phalcon
