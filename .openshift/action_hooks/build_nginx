@@ -25,8 +25,8 @@ function install_nginx() {
     # find ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta -type f -exec chmod +r {} \;
 
     echo "Configuring nginx."
-    ./configure \
-        # --add-module=${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta \
+	# --add-module=${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta \
+	./configure \
         --with-zlib=${BUILD_DIR}/zlib-${ZLIB_VERSION} \
         --with-pcre=${BUILD_DIR}/pcre-${PCRE_VERSION} \
         --with-http_ssl_module \
