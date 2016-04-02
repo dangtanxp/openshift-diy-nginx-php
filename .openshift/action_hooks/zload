@@ -1,0 +1,3 @@
+${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/deploy
+${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/stop
+${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/start
