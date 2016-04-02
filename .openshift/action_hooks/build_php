@@ -30,7 +30,7 @@ function install_php() {
             --with-pear \
             --with-zlib \
             --with-mhash \
-            --with-mysql \
+            # --with-mysql \
             --with-pgsql \
             --with-mysqli \
             --with-pdo-mysql \
