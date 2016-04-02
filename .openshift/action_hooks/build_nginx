@@ -16,22 +16,22 @@ function install_nginx() {
     pushd nginx-${NGINX_VERSION}
     
     ## Mod pagespeed
-	# mkdir -p ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules
-	# wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz
-	# tar xzf release-${NPS_VERSION}-beta.tar.gz -C ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules --no-same-owner
-	# wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
-	# tar -xzf ${NPS_VERSION}.tar.gz -C ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta --no-same-owner
-	# find ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta -type d -exec chmod +rx {} \;
-	# find ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta -type f -exec chmod +r {} \;
+    # mkdir -p ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules
+    # wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz
+    # tar xzf release-${NPS_VERSION}-beta.tar.gz -C ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules --no-same-owner
+    # wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
+    # tar -xzf ${NPS_VERSION}.tar.gz -C ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta --no-same-owner
+    # find ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta -type d -exec chmod +rx {} \;
+    # find ${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta -type f -exec chmod +r {} \;
 
     echo "Configuring nginx."
     ./configure \
         # --add-module=${BUILD_DIR}/nginx-${NGINX_VERSION}/modules/ngx_pagespeed-release-${NPS_VERSION}-beta \
-        --with-http_ssl_module \
-		--with-http_v2_module \
-        --with-http_sub_module \
         --with-zlib=${BUILD_DIR}/zlib-${ZLIB_VERSION} \
         --with-pcre=${BUILD_DIR}/pcre-${PCRE_VERSION} \
+        --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-http_sub_module \
         --with-http_realip_module \
         --with-http_gzip_static_module \
         --with-ipv6 \
