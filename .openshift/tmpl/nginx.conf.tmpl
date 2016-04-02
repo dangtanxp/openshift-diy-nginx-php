@@ -77,8 +77,8 @@ http {
 
     server {
         # This will listen on all interfaces, you can instead choose a specific IP
-    	# such as listen x.x.x.x:80;  Setting listen 80 default_server; will make
-    	# this server block the default one if no other blocks match the request
+        # such as listen x.x.x.x:80;  Setting listen 80 default_server; will make
+        # this server block the default one if no other blocks match the request
         listen ${OPENSHIFT_DIY_IP}:${OPENSHIFT_DIY_PORT};
 
         # Here you can set a server name, you can use wildcards such as *.example.com
@@ -90,47 +90,47 @@ http {
         # any location block path will be relative to this root.
         root   ${OPENSHIFT_REPO_DIR}/web;
         
-    		client_max_body_size 500M;
-    		client_body_buffer_size 1m;
-    		proxy_set_header X-Forwarded-Host $host;
-    		proxy_set_header X-Forwarded-Server $host;
-    		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		    real_ip_header    X-Forwarded-For;
+        client_max_body_size 500M;
+        client_body_buffer_size 1m;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        real_ip_header    X-Forwarded-For;
 
         # Forces modern clients to use secure connections only for at
         # least 8 days after the header was last returned. See:
         # https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
         add_header Strict-Transport-Security max-age=691200;
-		
-		# Phalcon
-		location @rewrites {
-			#rewrite ^(.*)$ /index.php/$1 last;
-			if (!-e $request_filename){
-				rewrite ^/(.*)$ /index.php?_url=/$1 last;
-			}
-		}
-		
-		# Laravel
+        
+        # Phalcon
+        location @rewrites {
+            #rewrite ^(.*)$ /index.php/$1 last;
+            if (!-e $request_filename){
+                rewrite ^/(.*)$ /index.php?_url=/$1 last;
+            }
+        }
+        
+        # Laravel
         #location @rewrites {
         #    rewrite ^(.*)$ /index.php/$1 last;
         #}
 
-		location /{
-			index index.php index.htm index.html;
-			try_files $uri $uri/ @rewrites;
-		}
-		
-		location ~ "\.(php|hh)(\?.*|)$" {
-			#expires 31536000s;
-			access_log off;
-			log_not_found off;
-			try_files $uri $uri/ @rewrites;
-			fastcgi_pass unix:${OPENSHIFT_RUN_DIR}/php-fpm.socket;
-			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-			fastcgi_param PATH_INFO $fastcgi_script_name;
-			include fastcgi_params;
-		}
-		
+        location /{
+            index index.php index.htm index.html;
+            try_files $uri $uri/ @rewrites;
+        }
+        
+        location ~ "\.(php|hh)(\?.*|)$" {
+            #expires 31536000s;
+            access_log off;
+            log_not_found off;
+            try_files $uri $uri/ @rewrites;
+            fastcgi_pass unix:${OPENSHIFT_RUN_DIR}/php-fpm.socket;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_script_name;
+            include fastcgi_params;
+        }
+        
         location = /robots.txt  { access_log off; log_not_found off; }
         location ~ /\.          { access_log off; log_not_found off; deny all; }
         location ~ ~$           { access_log off; log_not_found off; deny all; }
@@ -149,85 +149,85 @@ http {
     # opt-in to the future
     add_header "X-UA-Compatible" "IE=Edge,chrome=1";
         
-        # enable ngx_pagespeed
-    	location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
-    		#add_header "" "";
-    	}
-    
-    	location ~ "^/pagespeed_static/" { }
-    
-    	location ~ "^/ngx_pagespeed_beacon$" { }
-    
-    	#pagespeed on;
-    	#pagespeed Disallow */m.php*;
-    	#
-    	# pagespeed RewriteLevel OptimizeForBandwidth;
-    	#
-    	#pagespeed FileCachePath ${OPENSHIFT_REPO_DIR}/web/cache;
-    	#
-    	# # let's speed up PageSpeed by storing it in the super duper fast memcached
-    	# # pagespeed MemcachedThreads 1;
-    	# # pagespeed MemcachedServers "localhost:11211";
-    	#
-    	# # disable CoreFilters
-    	# pagespeed RewriteLevel PassThrough;
-    	#
-    	# # enable collapse whitespace filter
-    	# pagespeed EnableFilters collapse_whitespace;
-    	#
-    	# # enable JavaScript library offload
-    	# pagespeed EnableFilters canonicalize_javascript_libraries;
-    	#
-    	# # combine multiple CSS files into one
-    	# pagespeed EnableFilters combine_css;
-    	#
-    	# # combine multiple JavaScript files into one
-    	# pagespeed EnableFilters combine_javascript;
-    	#
-    	# # remove tags with default attributes
-    	# pagespeed EnableFilters elide_attributes;
-    	#
-    	# # improve resource cacheability
-    	# pagespeed EnableFilters extend_cache;
-    	#
-    	# # flatten CSS files by replacing @import with the imported file
-    	# pagespeed EnableFilters flatten_css_imports;
-    	# pagespeed CssFlattenMaxBytes 5120;
-    	#
-    	# # defer the loading of images which are not visible to the client
-    	# pagespeed EnableFilters lazyload_images;
-    	#
-    	# # enable JavaScript minification
-    	# pagespeed EnableFilters rewrite_javascript;
-    	#
-    	# # enable image optimization
-    	# pagespeed EnableFilters rewrite_images;
-    	#
-    	# # pre-solve DNS lookup
-    	# pagespeed EnableFilters insert_dns_prefetch;
-    	#
-    	# # rewrite CSS to load page-rendering CSS rules first.
-    	# pagespeed EnableFilters prioritize_critical_css;
-    	#
-    	# #centiminmod
-    	# pagespeed PreserveUrlRelativity on;
-    	# pagespeed MaxCombinedCssBytes -1;
-    	# pagespeed ImageResolutionLimitBytes 16777216;
-    	# pagespeed EnableFilters inline_google_font_css;
-    	#
-    	# pagespeed AvoidRenamingIntrospectiveJavascript on;
-    	# pagespeed ImageInlineMaxBytes 3072;
-    	# pagespeed CssImageInlineMaxBytes 204800;
-    	#
-    	# pagespeed MaxCombinedJsBytes 140000;
-    	#
-    	# # extend_cache
-    	# # https://developers.google.com/speed/docs/mod_pagespeed/filter-cache-extend
-    	# # pagespeed EnableFilters extend_cache;
-    	#
-    	# # resize_mobile_images
-    	# # https://developers.google.com/speed/pagespeed/module/filter-inline-preview-images#resize_mobile_images
-    	# pagespeed EnableFilters resize_mobile_images;
-    	# pagespeed MaxInlinedPreviewImagesIndex 6;
-    	# pagespeed MinImageSizeLowResolutionBytes 3072;
+    # enable ngx_pagespeed
+    location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
+        #add_header "" "";
+    }
+
+    location ~ "^/pagespeed_static/" { }
+
+    location ~ "^/ngx_pagespeed_beacon$" { }
+
+    #pagespeed on;
+    #pagespeed Disallow */m.php*;
+    #
+    # pagespeed RewriteLevel OptimizeForBandwidth;
+    #
+    #pagespeed FileCachePath ${OPENSHIFT_REPO_DIR}/web/cache;
+    #
+    # # let's speed up PageSpeed by storing it in the super duper fast memcached
+    # # pagespeed MemcachedThreads 1;
+    # # pagespeed MemcachedServers "localhost:11211";
+    #
+    # # disable CoreFilters
+    # pagespeed RewriteLevel PassThrough;
+    #
+    # # enable collapse whitespace filter
+    # pagespeed EnableFilters collapse_whitespace;
+    #
+    # # enable JavaScript library offload
+    # pagespeed EnableFilters canonicalize_javascript_libraries;
+    #
+    # # combine multiple CSS files into one
+    # pagespeed EnableFilters combine_css;
+    #
+    # # combine multiple JavaScript files into one
+    # pagespeed EnableFilters combine_javascript;
+    #
+    # # remove tags with default attributes
+    # pagespeed EnableFilters elide_attributes;
+    #
+    # # improve resource cacheability
+    # pagespeed EnableFilters extend_cache;
+    #
+    # # flatten CSS files by replacing @import with the imported file
+    # pagespeed EnableFilters flatten_css_imports;
+    # pagespeed CssFlattenMaxBytes 5120;
+    #
+    # # defer the loading of images which are not visible to the client
+    # pagespeed EnableFilters lazyload_images;
+    #
+    # # enable JavaScript minification
+    # pagespeed EnableFilters rewrite_javascript;
+    #
+    # # enable image optimization
+    # pagespeed EnableFilters rewrite_images;
+    #
+    # # pre-solve DNS lookup
+    # pagespeed EnableFilters insert_dns_prefetch;
+    #
+    # # rewrite CSS to load page-rendering CSS rules first.
+    # pagespeed EnableFilters prioritize_critical_css;
+    #   
+    # #centiminmod
+    # pagespeed PreserveUrlRelativity on;
+    # pagespeed MaxCombinedCssBytes -1;
+    # pagespeed ImageResolutionLimitBytes 16777216;
+    # pagespeed EnableFilters inline_google_font_css;
+    #
+    # pagespeed AvoidRenamingIntrospectiveJavascript on;
+    # pagespeed ImageInlineMaxBytes 3072;
+    # pagespeed CssImageInlineMaxBytes 204800;
+    #
+    # pagespeed MaxCombinedJsBytes 140000;
+    #
+    # # extend_cache
+    # # https://developers.google.com/speed/docs/mod_pagespeed/filter-cache-extend
+    # # pagespeed EnableFilters extend_cache;
+    #
+    # # resize_mobile_images
+    # # https://developers.google.com/speed/pagespeed/module/filter-inline-preview-images#resize_mobile_images
+    # pagespeed EnableFilters resize_mobile_images;
+    # pagespeed MaxInlinedPreviewImagesIndex 6;
+    # pagespeed MinImageSizeLowResolutionBytes 3072;
 }
